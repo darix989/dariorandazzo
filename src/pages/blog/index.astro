@@ -7,12 +7,15 @@ const posts = await getPublishedPosts();
 const description = 'Writing by Dario Randazzo.';
 ---
 
-<BaseLayout title="Blog" description={description} path="blog/">
-	<h1>Blog</h1>
-	<p class="lede">{description}</p>
+<BaseLayout title="Writing" description={description} path="blog/">
+	<div class="page-intro">
+		<p class="kicker">Journal</p>
+		<h1>Writing</h1>
+		<p class="lede">{description}</p>
+	</div>
 	{
 		posts.length > 0 ? (
-			<ul class="card-list">
+			<ul class="journal">
 				{posts.map((post) => (
 					<PostCard post={post} />
 				))}

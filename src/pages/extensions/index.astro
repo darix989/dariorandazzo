@@ -8,11 +8,14 @@ const description = 'Browser extensions by Dario Randazzo.';
 ---
 
 <BaseLayout title="Extensions" description={description} path="extensions/">
-	<h1>Browser extensions</h1>
-	<p class="lede">{description}</p>
+	<div class="page-intro">
+		<p class="kicker">Work</p>
+		<h1>Browser extensions</h1>
+		<p class="lede">{description}</p>
+	</div>
 	{
 		extensions.length > 0 ? (
-			<ul class="card-list">
+			<ul class="card-grid">
 				{extensions.map((extension) => (
 					<ExtensionCard extension={extension} />
 				))}

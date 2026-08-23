@@ -12,10 +12,12 @@ const href = withBase(`blog/${post.id}/`);
 const date = post.data.pubDate.toISOString().slice(0, 10);
 ---
 
-<li class="card">
-	<Heading>
-		<a href={href}>{post.data.title}</a>
-	</Heading>
-	<p class="meta">{date}</p>
-	<p>{post.data.description}</p>
+<li class="journal-item">
+	<time datetime={post.data.pubDate.toISOString()}>{date}</time>
+	<div>
+		<Heading>
+			<a href={href}>{post.data.title}</a>
+		</Heading>
+		<p>{post.data.description}</p>
+	</div>
 </li>

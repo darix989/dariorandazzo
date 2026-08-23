@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getAbout } from '../lib/content';
 import { personJsonLd } from '../lib/jsonld';
+import { SITE } from '../lib/site';
 
 const about = await getAbout();
 const { Content } = await render(about);
@@ -14,8 +15,11 @@ const { Content } = await render(about);
 	path="about/"
 	jsonLd={personJsonLd()}
 >
-	<h1>{about.data.title}</h1>
-	<div class="prose">
-		<Content />
+	<div class="page-intro">
+		<p class="kicker">{SITE.jobTitle}</p>
+		<h1>{about.data.title}</h1>
+		<div class="prose">
+			<Content />
+		</div>
 	</div>
 </BaseLayout>

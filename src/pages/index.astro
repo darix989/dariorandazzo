@@ -14,24 +14,25 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 ---
 
 <BaseLayout title={SITE.title} description={SITE.description} jsonLd={[websiteJsonLd(), personJsonLd()]}>
-	<h1>{SITE.author}</h1>
-	<p class="lede">{SITE.jobTitle}</p>
-
-	<section aria-labelledby="about-heading">
-		<h2 id="about-heading">{about.data.title}</h2>
-		<div class="prose">
+	<section class="hero" aria-labelledby="hero-heading">
+		<p class="kicker">{SITE.jobTitle}</p>
+		<h1 id="hero-heading">{SITE.author}</h1>
+		<div class="measure prose">
 			<Content />
+			<p>
+				<a class="more-link" href={withBase('about/')}>Continue reading</a>
+			</p>
 		</div>
-		<p>
-			<a class="more-link" href={withBase('about/')}>Full about page</a>
-		</p>
 	</section>
 
-	<section aria-labelledby="extensions-heading">
-		<h2 id="extensions-heading">Browser extensions</h2>
+	<section class="section" aria-labelledby="extensions-heading">
+		<div class="section-head">
+			<h2 class="section-label" id="extensions-heading">Extensions</h2>
+			<a class="more-link" href={withBase('extensions/')}>All extensions</a>
+		</div>
 		{
 			extensions.length > 0 ? (
-				<ul class="card-list">
+				<ul class="card-grid">
 					{extensions.map((extension) => (
 						<ExtensionCard extension={extension} heading="h3" />
 					))}
@@ -40,16 +41,16 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 				<p class="empty">No extensions published yet.</p>
 			)
 		}
-		<p>
-			<a class="more-link" href={withBase('extensions/')}>All extensions</a>
-		</p>
 	</section>
 
-	<section aria-labelledby="blog-heading">
-		<h2 id="blog-heading">Writing</h2>
+	<section class="section" aria-labelledby="blog-heading">
+		<div class="section-head">
+			<h2 class="section-label" id="blog-heading">Writing</h2>
+			<a class="more-link" href={withBase('blog/')}>All posts</a>
+		</div>
 		{
 			posts.length > 0 ? (
-				<ul class="card-list">
+				<ul class="journal">
 					{posts.map((post) => (
 						<PostCard post={post} heading="h3" />
 					))}
@@ -58,8 +59,5 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 				<p class="empty">No posts published yet.</p>
 			)
 		}
-		<p>
-			<a class="more-link" href={withBase('blog/')}>All posts</a>
-		</p>
 	</section>
 </BaseLayout>
