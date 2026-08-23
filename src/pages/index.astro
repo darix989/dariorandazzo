@@ -19,9 +19,6 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 		<h1 id="hero-heading">{SITE.author}</h1>
 		<div class="measure prose">
 			<Content />
-			<p>
-				<a class="more-link" href={withBase('about/')}>Continue reading</a>
-			</p>
 		</div>
 	</section>
 
