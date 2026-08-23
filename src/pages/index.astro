@@ -1,0 +1,65 @@
+---
+import { render } from 'astro:content';
+import ExtensionCard from '../components/ExtensionCard.astro';
+import PostCard from '../components/PostCard.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAbout, getFeaturedExtensions, getPublishedPosts } from '../lib/content';
+import { personJsonLd, websiteJsonLd } from '../lib/jsonld';
+import { SITE, withBase } from '../lib/site';
+
+const about = await getAbout();
+const { Content } = await render(about);
+const extensions = await getFeaturedExtensions();
+const posts = (await getPublishedPosts()).slice(0, 3);
+---
+
+<BaseLayout title={SITE.title} description={SITE.description} jsonLd={[websiteJsonLd(), personJsonLd()]}>
+	<h1>{SITE.author}</h1>
+	<p class="lede">{SITE.jobTitle}</p>
+
+	<section aria-labelledby="about-heading">
+		<h2 id="about-heading">{about.data.title}</h2>
+		<div class="prose">
+			<Content />
+		</div>
+		<p>
+			<a class="more-link" href={withBase('about/')}>Full about page</a>
+		</p>
+	</section>
+
+	<section aria-labelledby="extensions-heading">
+		<h2 id="extensions-heading">Browser extensions</h2>
+		{
+			extensions.length > 0 ? (
+				<ul class="card-list">
+					{extensions.map((extension) => (
+						<ExtensionCard extension={extension} heading="h3" />
+					))}
+				</ul>
+			) : (
+				<p class="empty">No extensions published yet.</p>
+			)
+		}
+		<p>
+			<a class="more-link" href={withBase('extensions/')}>All extensions</a>
+		</p>
+	</section>
+
+	<section aria-labelledby="blog-heading">
+		<h2 id="blog-heading">Writing</h2>
+		{
+			posts.length > 0 ? (
+				<ul class="card-list">
+					{posts.map((post) => (
+						<PostCard post={post} heading="h3" />
+					))}
+				</ul>
+			) : (
+				<p class="empty">No posts published yet.</p>
+			)
+		}
+		<p>
+			<a class="more-link" href={withBase('blog/')}>All posts</a>
+		</p>
+	</section>
+</BaseLayout>

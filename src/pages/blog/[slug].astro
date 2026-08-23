@@ -1,0 +1,67 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedPosts } from '../../lib/content';
+import { blogPostingJsonLd } from '../../lib/jsonld';
+import { withBase } from '../../lib/site';
+
+export async function getStaticPaths() {
+	const posts = await getPublishedPosts();
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}));
+}
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const path = `blog/${post.id}/`;
+const published = post.data.pubDate.toISOString().slice(0, 10);
+const updated = post.data.updatedDate?.toISOString().slice(0, 10);
+---
+
+<BaseLayout
+	title={post.data.title}
+	description={post.data.description}
+	path={path}
+	ogType="article"
+	jsonLd={blogPostingJsonLd({
+		title: post.data.title,
+		description: post.data.description,
+		path,
+		pubDate: post.data.pubDate,
+		updatedDate: post.data.updatedDate,
+	})}
+>
+	<article>
+		<h1>{post.data.title}</h1>
+		<p class="meta">
+			<time datetime={post.data.pubDate.toISOString()}>{published}</time>
+			{updated && updated !== published && <> · Updated {updated}</>}
+			{
+				post.data.tags.length > 0 && (
+					<>
+						{' '}
+						· {post.data.tags.join(', ')}
+					</>
+				)
+			}
+		</p>
+		{
+			post.data.heroImage && (
+				<img
+					class="hero-image"
+					src={post.data.heroImage.startsWith('http') ? post.data.heroImage : withBase(post.data.heroImage)}
+					alt={post.data.heroImageAlt ?? ''}
+				/>
+			)
+		}
+		<div class="prose">
+			<Content />
+		</div>
+	</article>
+</BaseLayout>

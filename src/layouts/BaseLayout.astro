@@ -1,0 +1,30 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Seo from '../components/Seo.astro';
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description: string;
+	path?: string;
+	ogType?: 'website' | 'article';
+	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, path, ogType, jsonLd } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<Seo title={title} description={description} path={path} ogType={ogType} jsonLd={jsonLd} />
+	</head>
+	<body>
+		<Header />
+		<main id="main" class="site-main">
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>

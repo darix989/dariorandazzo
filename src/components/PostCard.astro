@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../lib/site';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+	heading?: 'h2' | 'h3';
+}
+
+const { post, heading: Heading = 'h2' } = Astro.props;
+const href = withBase(`blog/${post.id}/`);
+const date = post.data.pubDate.toISOString().slice(0, 10);
+---
+
+<li class="card">
+	<Heading>
+		<a href={href}>{post.data.title}</a>
+	</Heading>
+	<p class="meta">{date}</p>
+	<p>{post.data.description}</p>
+</li>

@@ -1,0 +1,61 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedExtensions } from '../../lib/content';
+import { softwareApplicationJsonLd } from '../../lib/jsonld';
+
+export async function getStaticPaths() {
+	const extensions = await getPublishedExtensions();
+	return extensions.map((extension) => ({
+		params: { slug: extension.id },
+		props: { extension },
+	}));
+}
+
+interface Props {
+	extension: CollectionEntry<'extensions'>;
+}
+
+const { extension } = Astro.props;
+const { Content } = await render(extension);
+const path = `extensions/${extension.id}/`;
+const links = [
+	extension.data.storeUrl && { href: extension.data.storeUrl, label: 'Store' },
+	extension.data.repoUrl && { href: extension.data.repoUrl, label: 'Source' },
+	extension.data.websiteUrl && { href: extension.data.websiteUrl, label: 'Website' },
+].filter((link): link is { href: string; label: string } => Boolean(link));
+---
+
+<BaseLayout
+	title={extension.data.title}
+	description={extension.data.description}
+	path={path}
+	jsonLd={softwareApplicationJsonLd({
+		title: extension.data.title,
+		description: extension.data.description,
+		path,
+		platforms: extension.data.platforms,
+	})}
+>
+	<article>
+		<h1>{extension.data.title}</h1>
+		<p class="meta">
+			{extension.data.status}
+			{extension.data.platforms.length > 0 && <> · {extension.data.platforms.join(', ')}</>}
+		</p>
+		{
+			links.length > 0 && (
+				<ul class="ext-links">
+					{links.map((link) => (
+						<li>
+							<a href={link.href}>{link.label}</a>
+						</li>
+					))}
+				</ul>
+			)
+		}
+		<div class="prose">
+			<Content />
+		</div>
+	</article>
+</BaseLayout>

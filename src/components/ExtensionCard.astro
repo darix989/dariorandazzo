@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../lib/site';
+
+interface Props {
+	extension: CollectionEntry<'extensions'>;
+	heading?: 'h2' | 'h3';
+}
+
+const { extension, heading: Heading = 'h2' } = Astro.props;
+const href = withBase(`extensions/${extension.id}/`);
+---
+
+<li class="card">
+	<Heading>
+		<a href={href}>{extension.data.title}</a>
+	</Heading>
+	<p class="meta">{extension.data.status}</p>
+	<p>{extension.data.description}</p>
+</li>

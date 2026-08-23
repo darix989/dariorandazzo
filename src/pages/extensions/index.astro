@@ -1,0 +1,26 @@
+---
+import ExtensionCard from '../../components/ExtensionCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedExtensions } from '../../lib/content';
+
+const extensions = await getPublishedExtensions();
+const description = 'Browser extensions by Dario Randazzo.';
+---
+
+<BaseLayout title="Extensions" description={description} path="extensions/">
+	<h1>Browser extensions</h1>
+	<p class="lede">{description}</p>
+	{
+		extensions.length > 0 ? (
+			<ul class="card-list">
+				{extensions.map((extension) => (
+					<ExtensionCard extension={extension} />
+				))}
+			</ul>
+		) : (
+			<p class="empty">
+				No extensions published yet. Add a Markdown file in src/content/extensions/ with draft: false.
+			</p>
+		)
+	}
+</BaseLayout>

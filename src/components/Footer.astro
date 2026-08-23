@@ -1,0 +1,12 @@
+---
+import { SITE, withBase } from '../lib/site';
+---
+
+<footer class="site-footer">
+	<p>{SITE.author}, {SITE.jobTitle}</p>
+	<p>
+		<a href={withBase('rss.xml')}>RSS</a>
+		{' · '}
+		<a href={withBase('llms.txt')}>llms.txt</a>
+	</p>
+</footer>

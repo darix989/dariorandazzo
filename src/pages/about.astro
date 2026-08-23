@@ -1,0 +1,21 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAbout } from '../lib/content';
+import { personJsonLd } from '../lib/jsonld';
+
+const about = await getAbout();
+const { Content } = await render(about);
+---
+
+<BaseLayout
+	title={about.data.title}
+	description={about.data.description}
+	path="about/"
+	jsonLd={personJsonLd()}
+>
+	<h1>{about.data.title}</h1>
+	<div class="prose">
+		<Content />
+	</div>
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+import { SITE, withBase } from '../lib/site';
+
+const pathname = Astro.url.pathname;
+const links = [
+	{ href: withBase(), label: 'Home' },
+	{ href: withBase('about/'), label: 'About' },
+	{ href: withBase('extensions/'), label: 'Extensions' },
+	{ href: withBase('blog/'), label: 'Blog' },
+];
+
+function isCurrent(href: string) {
+	if (href === withBase()) {
+		return pathname === href;
+	}
+	return pathname === href || pathname.startsWith(href);
+}
+---
+
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+	<a class="site-title" href={withBase()}>{SITE.author}</a>
+	<nav class="site-nav" aria-label="Primary">
+		{
+			links.map((link) => (
+				<a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
+					{link.label}
+				</a>
+			))
+		}
+	</nav>
+</header>
