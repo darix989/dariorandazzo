@@ -1,12 +1,12 @@
 ---
 title: About
-description: I build browser extensions and TV streaming apps in Toronto. I maintain Well Bookmarked.
+description: I like to find solutions to problems we didn’t know we had. I made Well Bookmarked. By day I fix streaming apps on TVs.
 ---
 
-I build software that lives inside something you already use: streaming apps on TVs, and small tools in the browser.
+I like to find solutions to problems we didn’t know we had. It’s either that, or the OCD I picked up during Computer Engineering.
 
-Extensions are the right shape for that kind of tool. They sit next to the problem, they can stay on your machine, and they do not need an account or a server. [Well Bookmarked](/dariorandazzo/extensions/well-bookmarked/) is the one I maintain — tags, search, and cleanup for the bookmarks you already have.
+[Well Bookmarked](/dariorandazzo/extensions/well-bookmarked/) is a creature I made after I realized I had over 9,000 bookmarks. I’m down to a thousand-ish now.
 
-I studied Computer Engineering at the University of Catania, in Sicily, then a Master’s in Computer Graphics and Multimedia at Politecnico di Torino. I started in games at 34BigThings, moved to Toronto in 2019, and joined Accedo in 2020. I currently lead CBC Gem and ICI TOU.TV on Samsung, LG, Xbox, and Comcast devices.
+During my 9 to 5 I get to fix the broken streaming app you likely have on your TV.
 
 Reach me on [GitHub](https://github.com/darix989) or [LinkedIn](https://www.linkedin.com/in/dario-randazzo-6810a552).
