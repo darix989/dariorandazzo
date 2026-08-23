@@ -38,6 +38,7 @@ const updated = post.data.updatedDate?.toISOString().slice(0, 10);
 	})}
 >
 	<article>
+		<p class="kicker">Writing</p>
 		<h1>{post.data.title}</h1>
 		<p class="meta">
 			<time datetime={post.data.pubDate.toISOString()}>{published}</time>

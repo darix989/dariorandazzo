@@ -11,10 +11,21 @@ const { extension, heading: Heading = 'h2' } = Astro.props;
 const href = withBase(`extensions/${extension.id}/`);
 ---
 
-<li class="card">
+<li class="paper-card">
+	<p class="card-kicker">
+		<span class="dot" aria-hidden="true"></span>
+		{extension.data.status}
+		{
+			extension.data.platforms.length > 0 && (
+				<>
+					<span aria-hidden="true">·</span>
+					{extension.data.platforms.join(' · ')}
+				</>
+			)
+		}
+	</p>
 	<Heading>
 		<a href={href}>{extension.data.title}</a>
 	</Heading>
-	<p class="meta">{extension.data.status}</p>
 	<p>{extension.data.description}</p>
 </li>
