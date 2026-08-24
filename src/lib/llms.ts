@@ -17,15 +17,15 @@ export async function buildLlmsIndex() {
 		'',
 		`Personal site of ${SITE.author}, ${SITE.jobTitle}.`,
 		'',
-		'## whoami',
+		'## readme',
 		'',
 		mdLink(about.data.title, 'about/', about.data.description),
 		'',
-		'## daemons',
+		'## releases',
 		'',
 		extensions.length > 0
 			? extensions.map((entry) => mdLink(entry.data.title, `projects/${entry.id}/`, entry.data.description)).join('\n')
-			: '_No daemons published yet._',
+			: '_No releases published yet._',
 		'',
 		'## changelog',
 		'',
@@ -46,7 +46,7 @@ export async function buildLlmsFull() {
 		'',
 		`> ${SITE.description}`,
 		'',
-		'## whoami',
+		'## readme',
 		'',
 		`### ${about.data.title}`,
 		'',
@@ -56,7 +56,7 @@ export async function buildLlmsFull() {
 	];
 
 	if (extensions.length > 0) {
-		sections.push('', '## daemons');
+		sections.push('', '## releases');
 		for (const entry of extensions) {
 			sections.push(
 				'',
