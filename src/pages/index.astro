@@ -1,24 +1,26 @@
 ---
-import { render } from 'astro:content';
-import ProjectCard from '../components/ProjectCard.astro';
 import PostCard from '../components/PostCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getAbout, getFeaturedProjects, getPublishedPosts } from '../lib/content';
 import { personJsonLd, websiteJsonLd } from '../lib/jsonld';
 import { SITE, withBase } from '../lib/site';
 
 const about = await getAbout();
-const { Content } = await render(about);
 const projects = await getFeaturedProjects();
 const posts = (await getPublishedPosts()).slice(0, 3);
+// The homepage teases the readme rather than repeating it, so `/` and `/about/`
+// are not the same page to a crawler.
+const intro = about.data.intro ?? about.data.description;
 ---
 
 <BaseLayout title={SITE.title} description={SITE.description} jsonLd={[websiteJsonLd(), personJsonLd()]}>
 	<section class="hero" aria-labelledby="hero-heading">
 		<p class="kicker">{SITE.jobTitle}</p>
 		<h1 id="hero-heading">{SITE.author}</h1>
-		<div class="measure prose">
-			<Content />
+		<div class="measure">
+			<p class="lede">{intro}</p>
+			<p><a class="more-link" href={withBase('about/')}>Read the readme</a></p>
 		</div>
 	</section>
 

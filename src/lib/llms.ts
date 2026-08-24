@@ -17,6 +17,8 @@ export async function buildLlmsIndex() {
 		'',
 		`Personal site of ${SITE.author}, ${SITE.jobTitle}.`,
 		'',
+		`Full text of every page: ${absoluteUrl('llms-full.txt')}`,
+		'',
 		'## readme',
 		'',
 		mdLink(about.data.title, 'about/', about.data.description),

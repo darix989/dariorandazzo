@@ -19,6 +19,7 @@ npm install
 npm run dev      # dev server at http://localhost:4321/dariorandazzo/
 npm run build    # static output to dist/
 npm run preview  # serve the built dist/
+npm run og       # regenerate public/og.png, the default social card
 ```
 
 Node `>=22.12.0` (see `engines` in [package.json](package.json)).
@@ -46,8 +47,10 @@ src/
     content.ts             collection queries (draft filtering + sorting)
     jsonld.ts              schema.org builders
     llms.ts                llms.txt / llms-full.txt generators
+  pages/404.astro          noindex fallback; GitHub Pages serves it as 404.html
   styles/global.css        all styling, single file
-public/                    copied verbatim to the site root (favicons, images)
+scripts/generate-og.mjs    renders public/og.png via sharp (`npm run og`)
+public/                    copied verbatim to the site root (favicons, og.png, images)
 drafts/                    scratch Markdown, untracked, NOT part of the build
 dist/, .astro/             generated, gitignored — never edit or commit
 ```
@@ -96,7 +99,7 @@ file is the source of truth for required vs. optional fields.
 
 - **Blog post** → `src/content/blog/my-slug.md` → `/blog/my-slug/`
   Required: `title`, `description`, `pubDate`. Optional: `updatedDate`, `tags`,
-  `draft`, `heroImage`, `heroImageAlt`.
+  `draft`, `heroImage`, `heroImageAlt`, `heroImageWidth`, `heroImageHeight`.
 - **Project** → `src/content/projects/my-slug.md` → `/projects/my-slug/`
   Required: `title`, `description`, `status` (`live` | `wip` | `archived`).
   Optional: `storeUrl`, `repoUrl`, `websiteUrl`, `platforms` (`chrome` |
@@ -111,6 +114,10 @@ pipeline; leave those in place.
 `getFeaturedProjects()` falls back to *all* published projects when nothing
 is marked `featured`, so the homepage never renders empty.
 
+`about.md` also carries an optional `intro`: the homepage renders *that* plus a
+link, not the full body, so `/` and `/about/` are not duplicate pages. Edit the
+body and the `intro` together, or the teaser drifts from what it teases.
+
 ## Conventions
 
 - **Content queries** go through [src/lib/content.ts](src/lib/content.ts). Don't
@@ -123,12 +130,29 @@ is marked `featured`, so the homepage never renders empty.
 - **New collection or route?** Also update [src/lib/llms.ts](src/lib/llms.ts) —
   the agent-facing indexes are hand-assembled there and won't pick it up on
   their own.
+- **Head tags** all live in [src/components/Seo.astro](src/components/Seo.astro),
+  reached only through `BaseLayout` props: `ogImage`, `publishedTime`,
+  `modifiedTime`, `noindex`. Every page gets the `public/og.png` card unless it
+  passes `ogImage`; `noindex` also suppresses the canonical link, which is why
+  the 404 page has none.
+- **Images in content** use `class="content-image"` and must carry `width` +
+  `height` matching the file's real aspect ratio, plus `loading="lazy"` — except
+  the first image on a page, which is `loading="eager"`. Read intrinsic sizes
+  with sharp rather than guessing; wrong ratios cause layout shift.
+- **`robots.txt` is inert** at the current `base` (crawlers read it only at the
+  origin root). Don't "fix" it by moving files around — see the note in
+  [src/pages/robots.txt.ts](src/pages/robots.txt.ts).
+- **Public copy is for visitors.** Don't put authoring instructions or repo paths
+  in rendered strings; empty states say what a reader needs, not what an author
+  should type.
 - **Styling** is one global stylesheet, [src/styles/global.css](src/styles/global.css).
   No scoped `<style>` blocks, no utility classes, no CSS framework. Colors,
   fonts, and widths are CSS custom properties on `:root`, redefined under
   `@media (prefers-color-scheme: dark)` — add a token there rather than a literal
   color. Class names are semantic (`.paper-card`, `.journal-item`, `.kicker`,
-  `.prose`, `.lede`, `.section-label`).
+  `.prose`, `.lede`, `.section-label`, `.content-image`). One rule block per
+  selector: extend the existing block instead of adding a second one further down.
+  Kickers and nav labels are lowercase.
 - **Accessibility** is already wired: skip link, `aria-labelledby` on sections,
   `aria-current="page"` in the nav, `alt` on every image, `<time datetime>` for
   dates. Keep it that way.

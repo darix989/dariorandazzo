@@ -5,6 +5,12 @@ export const SITE = {
 	author: 'Dario Randazzo',
 	jobTitle: 'Computer Engineer',
 	origin: 'https://darix989.github.io',
+	locale: 'en_US',
+	/** Default social card. Regenerate with `npm run og` if the wording changes. */
+	ogImage: 'og.png',
+	ogImageWidth: 1200,
+	ogImageHeight: 630,
+	ogImageAlt: 'Dario Randazzo, Computer Engineer',
 } as const;
 
 function normalizeBase(): string {

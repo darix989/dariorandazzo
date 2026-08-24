@@ -70,11 +70,6 @@ body {
 
 .site-header,
 .site-footer,
-.site-main {
-	width: min(var(--shell), calc(100% - 2.5rem));
-	margin-inline: auto;
-}
-
 .site-header {
 	display: flex;
 	flex-wrap: wrap;
@@ -117,6 +112,8 @@ body {
 
 .site-main {
 	flex: 1;
+	width: min(var(--shell), calc(100% - 2.5rem));
+	margin-inline: auto;
 	padding: 2.75rem 0 4rem;
 }
 
@@ -200,8 +197,7 @@ button:focus-visible {
 
 .measure,
 .page-intro,
-article,
-.prose-page {
+article {
 	max-width: var(--measure);
 }
 
@@ -240,12 +236,6 @@ article,
 }
 
 .card-grid,
-.journal {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
 .card-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
@@ -302,6 +292,9 @@ article,
 .journal {
 	display: grid;
 	gap: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 .journal-item {
@@ -365,7 +358,7 @@ article,
 	font-size: 1.05rem;
 }
 
-.hero-image {
+.content-image {
 	display: block;
 	max-width: 100%;
 	height: auto;

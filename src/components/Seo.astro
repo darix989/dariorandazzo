@@ -7,13 +7,33 @@ interface Props {
 	path?: string;
 	ogType?: 'website' | 'article';
 	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+	/** Site-relative path to a custom social card. Falls back to SITE.ogImage. */
+	ogImage?: string;
+	publishedTime?: Date;
+	modifiedTime?: Date;
+	noindex?: boolean;
 }
 
-const { title, description, path = '', ogType = 'website', jsonLd } = Astro.props;
+const {
+	title,
+	description,
+	path = '',
+	ogType = 'website',
+	jsonLd,
+	ogImage,
+	publishedTime,
+	modifiedTime,
+	noindex = false,
+} = Astro.props;
+
 const isHome = path === '';
 const pageTitle = isHome ? title : `${title} · ${SITE.title}`;
 const canonical = absoluteUrl(path);
 const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
+// Only the default card has known intrinsic dimensions worth declaring.
+const isDefaultCard = !ogImage;
+const socialImage = absoluteUrl(ogImage ?? SITE.ogImage);
 ---
 
 <meta charset="utf-8" />
@@ -24,21 +44,41 @@ const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 	rel="stylesheet"
 />
 <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+<link rel="alternate icon" type="image/x-icon" sizes="32x32" href={withBase('favicon.ico')} />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
 <meta name="author" content={SITE.author} />
-<link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, follow" />}
+{/* A noindex page (e.g. 404) has no canonical URL worth claiming. */}
+{!noindex && <link rel="canonical" href={canonical} />}
 <link rel="alternate" type="application/rss+xml" title={SITE.title} href={withBase('rss.xml')} />
+{/* robots.txt is unreachable on a GitHub Pages project subpath, so advertise the sitemap here too. */}
+<link rel="sitemap" type="application/xml" title="Sitemap" href={withBase('sitemap-index.xml')} />
 <meta property="og:type" content={ogType} />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:site_name" content={SITE.title} />
-<meta name="twitter:card" content="summary" />
+<meta property="og:locale" content={SITE.locale} />
+<meta property="og:image" content={socialImage} />
+<meta property="og:image:alt" content={SITE.ogImageAlt} />
+{
+	isDefaultCard && (
+		<>
+			<meta property="og:image:width" content={String(SITE.ogImageWidth)} />
+			<meta property="og:image:height" content={String(SITE.ogImageHeight)} />
+		</>
+	)
+}
+{publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImage} />
+<meta name="twitter:image:alt" content={SITE.ogImageAlt} />
 {
 	jsonLdItems.map((item) => (
 		<script type="application/ld+json" set:html={JSON.stringify(item)} />

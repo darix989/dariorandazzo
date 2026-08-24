@@ -9,9 +9,6 @@ const links = [
 ];
 
 function isCurrent(href: string) {
-	if (href === withBase()) {
-		return pathname === href;
-	}
 	return pathname === href || pathname.startsWith(href);
 }
 ---
