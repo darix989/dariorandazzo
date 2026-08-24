@@ -4,13 +4,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublishedExtensions } from '../../lib/content';
 
 const extensions = await getPublishedExtensions();
-const description = 'Browser extensions by Dario Randazzo.';
+const description = 'Small tools that live in the browser.';
 ---
 
-<BaseLayout title="Extensions" description={description} path="extensions/">
+<BaseLayout title="releases" description={description} path="projects/">
 	<div class="page-intro">
 		<p class="kicker">Work</p>
-		<h1>Browser extensions</h1>
+		<h1>releases</h1>
 		<p class="lede">{description}</p>
 	</div>
 	{
@@ -22,7 +22,7 @@ const description = 'Browser extensions by Dario Randazzo.';
 			</ul>
 		) : (
 			<p class="empty">
-				No extensions published yet. Add a Markdown file in src/content/extensions/ with draft: false.
+				No releases published yet. Add a Markdown file in src/content/extensions/ with draft: false.
 			</p>
 		)
 	}

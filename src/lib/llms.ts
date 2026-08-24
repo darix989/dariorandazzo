@@ -17,21 +17,21 @@ export async function buildLlmsIndex() {
 		'',
 		`Personal site of ${SITE.author}, ${SITE.jobTitle}.`,
 		'',
-		'## About',
+		'## readme',
 		'',
 		mdLink(about.data.title, 'about/', about.data.description),
 		'',
-		'## Browser extensions',
+		'## releases',
 		'',
 		extensions.length > 0
-			? extensions.map((entry) => mdLink(entry.data.title, `extensions/${entry.id}/`, entry.data.description)).join('\n')
-			: '_No extensions published yet._',
+			? extensions.map((entry) => mdLink(entry.data.title, `projects/${entry.id}/`, entry.data.description)).join('\n')
+			: '_No releases published yet._',
 		'',
-		'## Blog',
+		'## changelog',
 		'',
 		posts.length > 0
 			? posts.map((entry) => mdLink(entry.data.title, `blog/${entry.id}/`, entry.data.description)).join('\n')
-			: '_No posts published yet._',
+			: '_Changelog is empty._',
 		'',
 	].join('\n');
 }
@@ -46,7 +46,7 @@ export async function buildLlmsFull() {
 		'',
 		`> ${SITE.description}`,
 		'',
-		'## About',
+		'## readme',
 		'',
 		`### ${about.data.title}`,
 		'',
@@ -56,13 +56,13 @@ export async function buildLlmsFull() {
 	];
 
 	if (extensions.length > 0) {
-		sections.push('', '## Browser extensions');
+		sections.push('', '## releases');
 		for (const entry of extensions) {
 			sections.push(
 				'',
 				`### ${entry.data.title}`,
 				'',
-				`URL: ${absoluteUrl(`extensions/${entry.id}/`)}`,
+				`URL: ${absoluteUrl(`projects/${entry.id}/`)}`,
 				'',
 				entry.body?.trim() ?? entry.data.description,
 			);
@@ -70,7 +70,7 @@ export async function buildLlmsFull() {
 	}
 
 	if (posts.length > 0) {
-		sections.push('', '## Blog');
+		sections.push('', '## changelog');
 		for (const entry of posts) {
 			sections.push(
 				'',
