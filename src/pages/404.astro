@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/site';
+
+const description = 'That page does not exist.';
+---
+
+<BaseLayout title="404" description={description} noindex>
+	<div class="page-intro">
+		<p class="kicker">404</p>
+		<h1>Nothing here</h1>
+		<p class="lede">{description}</p>
+		<p>
+			Try the <a href={withBase('about/')}>readme</a>, the
+			<a href={withBase('projects/')}>builds</a>, or the
+			<a href={withBase('blog/')}>changelog</a>.
+		</p>
+	</div>
+</BaseLayout>
