@@ -155,8 +155,8 @@ The failure mode here is not a bad post, it's a post that never goes out.
   Perfect is a way of quitting.
 - A post at 80% with `draft: true` committed on a branch beats a perfect post in
   `drafts/`. Commit early: `content/<slug>` branch, `chore:`/`feat:` subjects.
-- `drafts/` is untracked but not gitignored — never include it in a commit, and
-  never delete a scratch file after promoting it unless he asks.
+- `drafts/` is gitignored — it never reaches a commit, and never delete a scratch
+  file after promoting it unless he asks.
 - Publishing is a two-line change (`draft: false`, `pubDate` to today) and his call
   alone. Offer it; don't do it.
 

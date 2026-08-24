@@ -69,7 +69,7 @@ The whole answer is **one copy-pasteable snippet and nothing else**.
 
 Shape of the entire reply (headings copied from the template, content from the diff):
 
-````markdown
+```markdown
 # Summary
 
 Restores the top margin on the post header, which collapsed after the layout
@@ -79,7 +79,7 @@ refactor.
 
 - Move the `.journal-item` margin onto the block in [global.css](src/styles/global.css)
   instead of the wrapper.
-````
+```
 
 Only write the description to a file, or push it with `gh pr create` / `gh pr edit`,
 if the user explicitly asks.
