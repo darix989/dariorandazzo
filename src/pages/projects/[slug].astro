@@ -1,52 +1,52 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedExtensions } from '../../lib/content';
+import { getPublishedProjects } from '../../lib/content';
 import { softwareApplicationJsonLd } from '../../lib/jsonld';
 
 export async function getStaticPaths() {
-	const extensions = await getPublishedExtensions();
-	return extensions.map((extension) => ({
-		params: { slug: extension.id },
-		props: { extension },
+	const projects = await getPublishedProjects();
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: { project },
 	}));
 }
 
 interface Props {
-	extension: CollectionEntry<'extensions'>;
+	project: CollectionEntry<'projects'>;
 }
 
-const { extension } = Astro.props;
-const { Content } = await render(extension);
-const path = `projects/${extension.id}/`;
+const { project } = Astro.props;
+const { Content } = await render(project);
+const path = `projects/${project.id}/`;
 const links = [
-	extension.data.storeUrl && { href: extension.data.storeUrl, label: 'Store' },
-	extension.data.repoUrl && { href: extension.data.repoUrl, label: 'Source' },
-	extension.data.websiteUrl && { href: extension.data.websiteUrl, label: 'Website' },
+	project.data.storeUrl && { href: project.data.storeUrl, label: 'Store' },
+	project.data.repoUrl && { href: project.data.repoUrl, label: 'Source' },
+	project.data.websiteUrl && { href: project.data.websiteUrl, label: 'Website' },
 ].filter((link): link is { href: string; label: string } => Boolean(link));
 ---
 
 <BaseLayout
-	title={extension.data.title}
-	description={extension.data.description}
+	title={project.data.title}
+	description={project.data.description}
 	path={path}
 	jsonLd={softwareApplicationJsonLd({
-		title: extension.data.title,
-		description: extension.data.description,
+		title: project.data.title,
+		description: project.data.description,
 		path,
-		platforms: extension.data.platforms,
+		platforms: project.data.platforms,
 	})}
 >
 	<article>
 		<p class="kicker">build</p>
-		<h1>{extension.data.title}</h1>
+		<h1>{project.data.title}</h1>
 		<p class="meta">
-			{extension.data.status}
-			{extension.data.platforms.length > 0 && <> · {extension.data.platforms.join(', ')}</>}
+			{project.data.status}
+			{project.data.platforms.length > 0 && <> · {project.data.platforms.join(', ')}</>}
 		</p>
 		{
 			links.length > 0 && (
-				<ul class="ext-links">
+				<ul class="project-links">
 					{links.map((link) => (
 						<li>
 							<a href={link.href}>{link.label}</a>

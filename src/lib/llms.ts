@@ -1,4 +1,4 @@
-import { getAbout, getPublishedExtensions, getPublishedPosts } from './content';
+import { getAbout, getPublishedProjects, getPublishedPosts } from './content';
 import { SITE, absoluteUrl } from './site';
 
 function mdLink(title: string, path: string, description: string) {
@@ -7,7 +7,7 @@ function mdLink(title: string, path: string, description: string) {
 
 export async function buildLlmsIndex() {
 	const about = await getAbout();
-	const extensions = await getPublishedExtensions();
+	const projects = await getPublishedProjects();
 	const posts = await getPublishedPosts();
 
 	return [
@@ -23,8 +23,8 @@ export async function buildLlmsIndex() {
 		'',
 		'## builds',
 		'',
-		extensions.length > 0
-			? extensions.map((entry) => mdLink(entry.data.title, `projects/${entry.id}/`, entry.data.description)).join('\n')
+		projects.length > 0
+			? projects.map((entry) => mdLink(entry.data.title, `projects/${entry.id}/`, entry.data.description)).join('\n')
 			: '_No builds published yet._',
 		'',
 		'## changelog',
@@ -38,7 +38,7 @@ export async function buildLlmsIndex() {
 
 export async function buildLlmsFull() {
 	const about = await getAbout();
-	const extensions = await getPublishedExtensions();
+	const projects = await getPublishedProjects();
 	const posts = await getPublishedPosts();
 
 	const sections = [
@@ -55,9 +55,9 @@ export async function buildLlmsFull() {
 		about.body?.trim() ?? about.data.description,
 	];
 
-	if (extensions.length > 0) {
+	if (projects.length > 0) {
 		sections.push('', '## builds');
-		for (const entry of extensions) {
+		for (const entry of projects) {
 			sections.push(
 				'',
 				`### ${entry.data.title}`,

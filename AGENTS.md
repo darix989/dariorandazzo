@@ -37,10 +37,10 @@ src/
   content/
     about.md               the `pages` collection (single entry)
     blog/*.md              the `blog` collection
-    extensions/*.md        the `extensions` collection
+    projects/*.md          the `projects` collection
   pages/                   routes (file-based)
   layouts/BaseLayout.astro the only layout; wraps Seo + Header + Footer
-  components/              Seo, Header, Footer, PostCard, ExtensionCard
+  components/              Seo, Header, Footer, PostCard, ProjectCard
   lib/
     site.ts                SITE constants, withBase(), absoluteUrl()
     content.ts             collection queries (draft filtering + sorting)
@@ -54,19 +54,23 @@ dist/, .astro/             generated, gitignored — never edit or commit
 
 ## The vocabulary split (read this before touching nav or copy)
 
-Routes and user-facing labels deliberately disagree. Don't "fix" the mismatch.
+Code identifiers and user-facing labels deliberately disagree. Don't "fix" the
+mismatch.
 
-| Collection dir | Route | Nav label | Page kicker |
+| Collection | Route | Nav label | Page kicker |
 | --- | --- | --- | --- |
-| `src/content/about.md` | `/about/` | `readme` | — |
-| `src/content/extensions/` | `/projects/` | `builds` | `build` (singular) |
-| `src/content/blog/` | `/blog/` | `changelog` | `changelog` |
+| `pages` (`src/content/about.md`) | `/about/` | `readme` | — |
+| `projects` (`src/content/projects/`) | `/projects/` | `builds` | `build` (singular) |
+| `blog` (`src/content/blog/`) | `/blog/` | `changelog` | `changelog` |
 
-So: the collection is named `extensions`, its route is `/projects/`, and humans
-see `builds`. Three names for one thing, all intentional. When adding UI copy,
-use the label column; when writing paths or `getCollection` calls, use the other
-two. `builds` are the things that were made, the `changelog` is what was written
-about them — keep them distinct.
+Collections and routes always agree; only the labels differ. In code, paths, and
+`getCollection` calls use the collection name; in anything a human reads use the
+label. `builds` are the things that were made, the `changelog` is what was
+written about them — keep them distinct.
+
+The word "extension" is retired as a code identifier. It survives only in prose
+where it's the correct English noun (Well Bookmarked genuinely is a browser
+extension) — don't sweep those.
 
 ## URL handling
 
@@ -93,7 +97,7 @@ file is the source of truth for required vs. optional fields.
 - **Blog post** → `src/content/blog/my-slug.md` → `/blog/my-slug/`
   Required: `title`, `description`, `pubDate`. Optional: `updatedDate`, `tags`,
   `draft`, `heroImage`, `heroImageAlt`.
-- **Extension** → `src/content/extensions/my-slug.md` → `/projects/my-slug/`
+- **Project** → `src/content/projects/my-slug.md` → `/projects/my-slug/`
   Required: `title`, `description`, `status` (`live` | `wip` | `archived`).
   Optional: `storeUrl`, `repoUrl`, `websiteUrl`, `platforms` (`chrome` |
   `firefox` | `safari` | `edge`), `featured`, `draft`.
@@ -104,7 +108,7 @@ the `getPublished*` filters in [src/lib/content.ts](src/lib/content.ts). Each
 collection keeps a `_placeholder.md` with `draft: true` to exercise the
 pipeline; leave those in place.
 
-`getFeaturedExtensions()` falls back to *all* published extensions when nothing
+`getFeaturedProjects()` falls back to *all* published projects when nothing
 is marked `featured`, so the homepage never renders empty.
 
 ## Conventions

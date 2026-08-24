@@ -1,15 +1,15 @@
 ---
 import { render } from 'astro:content';
-import ExtensionCard from '../components/ExtensionCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import PostCard from '../components/PostCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getAbout, getFeaturedExtensions, getPublishedPosts } from '../lib/content';
+import { getAbout, getFeaturedProjects, getPublishedPosts } from '../lib/content';
 import { personJsonLd, websiteJsonLd } from '../lib/jsonld';
 import { SITE, withBase } from '../lib/site';
 
 const about = await getAbout();
 const { Content } = await render(about);
-const extensions = await getFeaturedExtensions();
+const projects = await getFeaturedProjects();
 const posts = (await getPublishedPosts()).slice(0, 3);
 ---
 
@@ -28,10 +28,10 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 			<a class="more-link" href={withBase('projects/')}>All builds</a>
 		</div>
 		{
-			extensions.length > 0 ? (
+			projects.length > 0 ? (
 				<ul class="card-grid">
-					{extensions.map((extension) => (
-						<ExtensionCard extension={extension} heading="h3" />
+					{projects.map((project) => (
+						<ProjectCard project={project} heading="h3" />
 					))}
 				</ul>
 			) : (

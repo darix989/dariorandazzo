@@ -1,9 +1,9 @@
 ---
-import ExtensionCard from '../../components/ExtensionCard.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedExtensions } from '../../lib/content';
+import { getPublishedProjects } from '../../lib/content';
 
-const extensions = await getPublishedExtensions();
+const projects = await getPublishedProjects();
 const description = 'Small tools that live in the browser.';
 ---
 
@@ -14,15 +14,15 @@ const description = 'Small tools that live in the browser.';
 		<p class="lede">{description}</p>
 	</div>
 	{
-		extensions.length > 0 ? (
+		projects.length > 0 ? (
 			<ul class="card-grid">
-				{extensions.map((extension) => (
-					<ExtensionCard extension={extension} />
+				{projects.map((project) => (
+					<ProjectCard project={project} />
 				))}
 			</ul>
 		) : (
 			<p class="empty">
-				No builds published yet. Add a Markdown file in src/content/extensions/ with draft: false.
+				No builds published yet. Add a Markdown file in src/content/projects/ with draft: false.
 			</p>
 		)
 	}

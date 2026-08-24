@@ -1,7 +1,7 @@
 export const SITE = {
 	title: 'Dario Randazzo',
 	description:
-		'Personal site of Dario Randazzo, Computer Engineer. About, browser extensions, and writing.',
+		'Personal site of Dario Randazzo, Computer Engineer. About, projects, and writing.',
 	author: 'Dario Randazzo',
 	jobTitle: 'Computer Engineer',
 	origin: 'https://darix989.github.io',
