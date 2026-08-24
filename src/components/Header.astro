@@ -3,9 +3,9 @@ import { SITE, withBase } from '../lib/site';
 
 const pathname = Astro.url.pathname;
 const links = [
-	{ href: withBase('about/'), label: 'About' },
-	{ href: withBase('extensions/'), label: 'Extensions' },
-	{ href: withBase('blog/'), label: 'Writing' },
+	{ href: withBase('about/'), label: 'whoami' },
+	{ href: withBase('projects/'), label: 'daemons' },
+	{ href: withBase('blog/'), label: 'changelog' },
 ];
 
 function isCurrent(href: string) {

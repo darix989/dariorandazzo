@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { extension, heading: Heading = 'h2' } = Astro.props;
-const href = withBase(`extensions/${extension.id}/`);
+const href = withBase(`projects/${extension.id}/`);
 ---
 
 <li class="paper-card">

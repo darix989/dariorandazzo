@@ -18,7 +18,7 @@ interface Props {
 
 const { extension } = Astro.props;
 const { Content } = await render(extension);
-const path = `extensions/${extension.id}/`;
+const path = `projects/${extension.id}/`;
 const links = [
 	extension.data.storeUrl && { href: extension.data.storeUrl, label: 'Store' },
 	extension.data.repoUrl && { href: extension.data.repoUrl, label: 'Source' },
@@ -38,7 +38,7 @@ const links = [
 	})}
 >
 	<article>
-		<p class="kicker">Extension</p>
+		<p class="kicker">daemon</p>
 		<h1>{extension.data.title}</h1>
 		<p class="meta">
 			{extension.data.status}

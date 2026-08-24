@@ -22,10 +22,10 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 		</div>
 	</section>
 
-	<section class="section" aria-labelledby="extensions-heading">
+	<section class="section" aria-labelledby="daemons-heading">
 		<div class="section-head">
-			<h2 class="section-label" id="extensions-heading">Extensions</h2>
-			<a class="more-link" href={withBase('extensions/')}>All extensions</a>
+			<h2 class="section-label" id="daemons-heading">daemons</h2>
+			<a class="more-link" href={withBase('projects/')}>All daemons</a>
 		</div>
 		{
 			extensions.length > 0 ? (
@@ -35,15 +35,15 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 					))}
 				</ul>
 			) : (
-				<p class="empty">No extensions published yet.</p>
+				<p class="empty">No daemons published yet.</p>
 			)
 		}
 	</section>
 
-	<section class="section" aria-labelledby="blog-heading">
+	<section class="section" aria-labelledby="changelog-heading">
 		<div class="section-head">
-			<h2 class="section-label" id="blog-heading">Writing</h2>
-			<a class="more-link" href={withBase('blog/')}>All posts</a>
+			<h2 class="section-label" id="changelog-heading">changelog</h2>
+			<a class="more-link" href={withBase('blog/')}>Full changelog</a>
 		</div>
 		{
 			posts.length > 0 ? (
@@ -53,7 +53,7 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 					))}
 				</ul>
 			) : (
-				<p class="empty">No posts published yet.</p>
+				<p class="empty">Changelog is empty.</p>
 			)
 		}
 	</section>

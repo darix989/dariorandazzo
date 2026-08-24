@@ -1,11 +1,11 @@
 ---
-title: About
+title: whoami
 description: I like to find solutions to problems we didn’t know we had. I made Well Bookmarked. By day I fix streaming apps on TVs.
 ---
 
 I like to find solutions to problems we didn’t know we had. It’s either that, or the OCD I picked up during Computer Engineering.
 
-[Well Bookmarked](/dariorandazzo/extensions/well-bookmarked/) is a creature I made after I realized I had over 9,000 bookmarks. I’m down to a thousand-ish now.
+[Well Bookmarked](/dariorandazzo/projects/well-bookmarked/) is a creature I made after I realized I had over 9,000 bookmarks. I’m down to a thousand-ish now.
 
 During my 9 to 5 I get to fix the broken streaming app you likely have on your TV.
 

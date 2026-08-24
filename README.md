@@ -10,7 +10,7 @@ Content is Markdown. Add a file, fill in frontmatter, and rebuild. Set `draft: t
 | --- | --- | --- |
 | About | `src/content/about.md` | `/about/` (also rendered on the homepage) |
 | Blog post | `src/content/blog/my-slug.md` | `/blog/my-slug/` |
-| Extension | `src/content/extensions/my-slug.md` | `/extensions/my-slug/` |
+| Extension | `src/content/extensions/my-slug.md` | `/projects/my-slug/` |
 
 The filename is the slug. Dates and other metadata live in frontmatter, not the filename.
 
