@@ -21,11 +21,11 @@ export async function buildLlmsIndex() {
 		'',
 		mdLink(about.data.title, 'about/', about.data.description),
 		'',
-		'## releases',
+		'## builds',
 		'',
 		extensions.length > 0
 			? extensions.map((entry) => mdLink(entry.data.title, `projects/${entry.id}/`, entry.data.description)).join('\n')
-			: '_No releases published yet._',
+			: '_No builds published yet._',
 		'',
 		'## changelog',
 		'',
@@ -56,7 +56,7 @@ export async function buildLlmsFull() {
 	];
 
 	if (extensions.length > 0) {
-		sections.push('', '## releases');
+		sections.push('', '## builds');
 		for (const entry of extensions) {
 			sections.push(
 				'',

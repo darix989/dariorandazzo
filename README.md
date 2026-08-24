@@ -2,6 +2,18 @@
 
 Personal site for Dario Randazzo, Computer Engineer. Built with [Astro](https://astro.build) and published to GitHub Pages at https://darix989.github.io/dariorandazzo/.
 
+## Navigation labels
+
+The nav uses repo-file names, not section names. The label is the only thing that changes; routes keep their real paths.
+
+| Label | Route | Content |
+| --- | --- | --- |
+| `readme` | `/about/` | About |
+| `builds` | `/projects/` | Extensions |
+| `changelog` | `/blog/` | Blog posts |
+
+Keep `builds` distinct from `changelog`: builds are the things that were made, the changelog is what was written about them. A single entry's kicker is `build` (singular).
+
 ## Authoring
 
 Content is Markdown. Add a file, fill in frontmatter, and rebuild. Set `draft: true` to keep an entry out of listings, the sitemap, RSS, and `llms.txt`.

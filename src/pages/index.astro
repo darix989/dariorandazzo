@@ -22,10 +22,10 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 		</div>
 	</section>
 
-	<section class="section" aria-labelledby="releases-heading">
+	<section class="section" aria-labelledby="builds-heading">
 		<div class="section-head">
-			<h2 class="section-label" id="releases-heading">releases</h2>
-			<a class="more-link" href={withBase('projects/')}>All releases</a>
+			<h2 class="section-label" id="builds-heading">builds</h2>
+			<a class="more-link" href={withBase('projects/')}>All builds</a>
 		</div>
 		{
 			extensions.length > 0 ? (
@@ -35,7 +35,7 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 					))}
 				</ul>
 			) : (
-				<p class="empty">No releases published yet.</p>
+				<p class="empty">No builds published yet.</p>
 			)
 		}
 	</section>
