@@ -7,6 +7,8 @@ tags:
 draft: false
 heroImage: projects/well-bookmarked/assets/features/hero.webp
 heroImageAlt: "Well Bookmarked — find any bookmark by tag, instantly"
+heroImageWidth: 1280
+heroImageHeight: 800
 ---
 
 IT IS OVER 9000! That's how [Well Bookmarked](/dariorandazzo/projects/well-bookmarked/) started.

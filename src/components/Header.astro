@@ -4,14 +4,11 @@ import { SITE, withBase } from '../lib/site';
 const pathname = Astro.url.pathname;
 const links = [
 	{ href: withBase('about/'), label: 'readme' },
-	{ href: withBase('projects/'), label: 'releases' },
+	{ href: withBase('projects/'), label: 'builds' },
 	{ href: withBase('blog/'), label: 'changelog' },
 ];
 
 function isCurrent(href: string) {
-	if (href === withBase()) {
-		return pathname === href;
-	}
 	return pathname === href || pathname.startsWith(href);
 }
 ---

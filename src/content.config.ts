@@ -7,6 +7,8 @@ const pages = defineCollection({
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
+		/** Short homepage teaser. Keeps `/` and `/about/` from being the same page. */
+		intro: z.string().optional(),
 	}),
 });
 
@@ -21,22 +23,25 @@ const blog = defineCollection({
 		draft: z.boolean().default(false),
 		heroImage: z.string().optional(),
 		heroImageAlt: z.string().optional(),
+		/** Intrinsic size of heroImage. Set both to reserve space and avoid layout shift. */
+		heroImageWidth: z.number().int().positive().optional(),
+		heroImageHeight: z.number().int().positive().optional(),
 	}),
 });
 
-const extensions = defineCollection({
-	loader: glob({ base: './src/content/extensions', pattern: '**/*.{md,mdx}' }),
+const projects = defineCollection({
+	loader: glob({ base: './src/content/projects', pattern: '**/*.{md,mdx}' }),
 	schema: z.object({
 		title: z.string(),
 		description: z.string(),
 		status: z.enum(['live', 'wip', 'archived']),
-		storeUrl: z.string().url().optional(),
-		repoUrl: z.string().url().optional(),
-		websiteUrl: z.string().url().optional(),
+		storeUrl: z.url().optional(),
+		repoUrl: z.url().optional(),
+		websiteUrl: z.url().optional(),
 		platforms: z.array(z.enum(['chrome', 'firefox', 'safari', 'edge'])).default([]),
 		featured: z.boolean().default(false),
 		draft: z.boolean().default(false),
 	}),
 });
 
-export const collections = { pages, blog, extensions };
+export const collections = { pages, blog, projects };

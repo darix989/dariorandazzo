@@ -1,41 +1,47 @@
 ---
-import { render } from 'astro:content';
-import ExtensionCard from '../components/ExtensionCard.astro';
 import PostCard from '../components/PostCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getAbout, getFeaturedExtensions, getPublishedPosts } from '../lib/content';
+import { getAbout, getFeaturedProjects, getPublishedPosts } from '../lib/content';
 import { personJsonLd, websiteJsonLd } from '../lib/jsonld';
 import { SITE, withBase } from '../lib/site';
 
 const about = await getAbout();
-const { Content } = await render(about);
-const extensions = await getFeaturedExtensions();
+const projects = await getFeaturedProjects();
 const posts = (await getPublishedPosts()).slice(0, 3);
+// The homepage teases the readme rather than repeating it, so `/` and `/about/`
+// are not the same page to a crawler.
+const intro = about.data.intro ?? about.data.description;
 ---
 
-<BaseLayout title={SITE.title} description={SITE.description} jsonLd={[websiteJsonLd(), personJsonLd()]}>
+<BaseLayout
+	title={SITE.title}
+	description={SITE.description}
+	jsonLd={[websiteJsonLd(), personJsonLd()]}
+>
 	<section class="hero" aria-labelledby="hero-heading">
 		<p class="kicker">{SITE.jobTitle}</p>
 		<h1 id="hero-heading">{SITE.author}</h1>
-		<div class="measure prose">
-			<Content />
+		<div class="measure">
+			<p class="lede">{intro}</p>
+			<p><a class="more-link" href={withBase('about/')}>Read the readme</a></p>
 		</div>
 	</section>
 
-	<section class="section" aria-labelledby="releases-heading">
+	<section class="section" aria-labelledby="builds-heading">
 		<div class="section-head">
-			<h2 class="section-label" id="releases-heading">releases</h2>
-			<a class="more-link" href={withBase('projects/')}>All releases</a>
+			<h2 class="section-label" id="builds-heading">builds</h2>
+			<a class="more-link" href={withBase('projects/')}>All builds</a>
 		</div>
 		{
-			extensions.length > 0 ? (
+			projects.length > 0 ? (
 				<ul class="card-grid">
-					{extensions.map((extension) => (
-						<ExtensionCard extension={extension} heading="h3" />
+					{projects.map((project) => (
+						<ProjectCard project={project} heading="h3" />
 					))}
 				</ul>
 			) : (
-				<p class="empty">No releases published yet.</p>
+				<p class="empty">No builds published yet.</p>
 			)
 		}
 	</section>

@@ -10,15 +10,30 @@ interface Props {
 	path?: string;
 	ogType?: 'website' | 'article';
 	jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+	ogImage?: string;
+	publishedTime?: Date;
+	modifiedTime?: Date;
+	noindex?: boolean;
 }
 
-const { title, description, path, ogType, jsonLd } = Astro.props;
+const { title, description, path, ogType, jsonLd, ogImage, publishedTime, modifiedTime, noindex } =
+	Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<Seo title={title} description={description} path={path} ogType={ogType} jsonLd={jsonLd} />
+		<Seo
+			title={title}
+			description={description}
+			path={path}
+			ogType={ogType}
+			jsonLd={jsonLd}
+			ogImage={ogImage}
+			publishedTime={publishedTime}
+			modifiedTime={modifiedTime}
+			noindex={noindex}
+		/>
 	</head>
 	<body>
 		<Header />

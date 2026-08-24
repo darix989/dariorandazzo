@@ -1,6 +1,6 @@
 ---
-title: Placeholder extension
-description: Draft placeholder used to validate the extensions content pipeline.
+title: Placeholder project
+description: Draft placeholder used to validate the projects content pipeline.
 status: wip
 platforms:
   - chrome

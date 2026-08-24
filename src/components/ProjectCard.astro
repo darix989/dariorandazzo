@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { withBase } from '../lib/site';
+
+interface Props {
+	project: CollectionEntry<'projects'>;
+	heading?: 'h2' | 'h3';
+}
+
+const { project, heading: Heading = 'h2' } = Astro.props;
+const href = withBase(`projects/${project.id}/`);
+---
+
+<li class="paper-card">
+	<p class="card-kicker">
+		<span class="dot" aria-hidden="true"></span>
+		{project.data.status}
+		{
+			project.data.platforms.length > 0 && (
+				<>
+					<span aria-hidden="true">·</span>
+					{project.data.platforms.join(' · ')}
+				</>
+			)
+		}
+	</p>
+	<Heading>
+		<a href={href}>{project.data.title}</a>
+	</Heading>
+	<p>{project.data.description}</p>
+</li>

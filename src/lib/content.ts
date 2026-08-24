@@ -13,13 +13,13 @@ export async function getPublishedPosts() {
 	return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
-export async function getPublishedExtensions() {
-	const extensions = await getCollection('extensions', ({ data }) => !data.draft);
-	return extensions.sort((a, b) => a.data.title.localeCompare(b.data.title));
+export async function getPublishedProjects() {
+	const projects = await getCollection('projects', ({ data }) => !data.draft);
+	return projects.sort((a, b) => a.data.title.localeCompare(b.data.title));
 }
 
-export async function getFeaturedExtensions() {
-	const extensions = await getPublishedExtensions();
-	const featured = extensions.filter((entry) => entry.data.featured);
-	return featured.length > 0 ? featured : extensions;
+export async function getFeaturedProjects() {
+	const projects = await getPublishedProjects();
+	const featured = projects.filter((entry) => entry.data.featured);
+	return featured.length > 0 ? featured : projects;
 }
