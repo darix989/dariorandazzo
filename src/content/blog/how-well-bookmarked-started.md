@@ -1,4 +1,15 @@
-IT IS OVER 9000! That's how Well Bookmarked started.
+---
+title: "How Well Bookmarked started"
+description: "A few thousand bookmarks I could never find again, a few tags I could remember, and the extension I still use every day."
+pubDate: 2026-08-23
+tags:
+  - well-bookmarked
+draft: false
+heroImage: projects/well-bookmarked/assets/features/hero.webp
+heroImageAlt: "Well Bookmarked — find any bookmark by tag, instantly"
+---
+
+IT IS OVER 9000! That's how [Well Bookmarked](/dariorandazzo/projects/well-bookmarked/) started.
 
 Okay, they weren't actually over 9000. They were about 3,000. Still a lot.
 
@@ -24,6 +35,6 @@ Once the setup felt pretty good, another problem showed up: duplicate bookmarks.
 
 I still use it every day. If your bookmark bar looks like mine used to, give it a few days. Hopefully it clicks for you too.
 
-The tool is free, and it will likely stay that way. If it helps, consider leaving a rating on the store.
+The tool is free, and it will likely stay that way. If it helps, consider leaving a rating on the [Chrome Web Store](https://chromewebstore.google.com/detail/well-bookmarked/ickglfbpinekdkphoppfigdnccgnnajh) or [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/well-bookmarked/).
 
 Happy bookmarking!
