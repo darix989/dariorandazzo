@@ -1,0 +1,14 @@
+{
+  "useTabs": true,
+  "singleQuote": true,
+  "semi": true,
+  "printWidth": 100,
+  "trailingComma": "all",
+  "plugins": ["prettier-plugin-astro"],
+  "overrides": [
+    {
+      "files": ["*.json", "*.yml", "*.yaml", "*.md"],
+      "options": { "useTabs": false, "tabWidth": 2 }
+    }
+  ]
+}

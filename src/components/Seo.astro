@@ -54,7 +54,9 @@ const socialImage = absoluteUrl(ogImage ?? SITE.ogImage);
 {/* A noindex page (e.g. 404) has no canonical URL worth claiming. */}
 {!noindex && <link rel="canonical" href={canonical} />}
 <link rel="alternate" type="application/rss+xml" title={SITE.title} href={withBase('rss.xml')} />
-{/* robots.txt is unreachable on a GitHub Pages project subpath, so advertise the sitemap here too. */}
+{
+	/* robots.txt is unreachable on a GitHub Pages project subpath, so advertise the sitemap here too. */
+}
 <link rel="sitemap" type="application/xml" title="Sitemap" href={withBase('sitemap-index.xml')} />
 <meta property="og:type" content={ogType} />
 <meta property="og:title" content={pageTitle} />
@@ -81,6 +83,6 @@ const socialImage = absoluteUrl(ogImage ?? SITE.ogImage);
 <meta name="twitter:image:alt" content={SITE.ogImageAlt} />
 {
 	jsonLdItems.map((item) => (
-		<script type="application/ld+json" set:html={JSON.stringify(item)} />
+		<script is:inline type="application/ld+json" set:html={JSON.stringify(item)} />
 	))
 }

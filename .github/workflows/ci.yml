@@ -1,0 +1,95 @@
+name: Verify and deploy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Elevated only on the deploy job, which is the one that needs it.
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  # Superseded pull request runs are worth cancelling; an in-flight deploy is not.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Formatting
+        run: npm run format:check
+
+      # `astro build` does not run tsc, so type errors surface only here.
+      - name: Types and content schemas
+        run: npm run check
+
+      - name: Build
+        run: npm run build
+
+      # The site is served from /dariorandazzo/, so root-relative links in the
+      # HTML only resolve if dist/ sits under a directory of that name.
+      - name: Stage build for link checking
+        run: |
+          mkdir -p _linkcheck/dariorandazzo
+          cp -r dist/. _linkcheck/dariorandazzo/
+
+      - name: Links
+        uses: lycheeverse/lychee-action@v2.9.0
+        with:
+          # The input glob MUST stay single-quoted: the action interpolates args
+          # into a shell, and unquoted `**` collapses to `*` there, silently
+          # checking 3 files instead of all of them.
+          #
+          # --root-dir needs an absolute path and is what maps a root-relative
+          # href onto the staged tree.
+          # 301 is accepted: the Chrome Web Store redirects to a slug containing
+          # a raw em-dash, which is not a followable URL.
+          # This site's own origin is excluded because on a pull request the
+          # canonical and og:image URLs point at pages not yet deployed.
+          # LinkedIn answers every bot with HTTP 999.
+          args: >-
+            --root-dir ${{ github.workspace }}/_linkcheck
+            --no-progress
+            --timeout 20
+            --max-retries 2
+            --accept '200..=299,301,302,307,308,429'
+            --exclude '^https://darix989\.github\.io'
+            --exclude '^https://www\.linkedin\.com'
+            '_linkcheck/dariorandazzo/**/*.html'
+          fail: true
+
+      # This is the same dist/ the checks just ran against, so the site is never
+      # built twice and never deploys a build nothing verified.
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: verify
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

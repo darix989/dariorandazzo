@@ -6,9 +6,9 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://darix989.github.io',
-  base: '/dariorandazzo',
-  output: 'static',
-  trailingSlash: 'always',
-  integrations: [sitemap(), mdx()],
+	site: 'https://darix989.github.io',
+	base: '/dariorandazzo',
+	output: 'static',
+	trailingSlash: 'always',
+	integrations: [sitemap(), mdx()],
 });

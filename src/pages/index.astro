@@ -14,7 +14,11 @@ const posts = (await getPublishedPosts()).slice(0, 3);
 const intro = about.data.intro ?? about.data.description;
 ---
 
-<BaseLayout title={SITE.title} description={SITE.description} jsonLd={[websiteJsonLd(), personJsonLd()]}>
+<BaseLayout
+	title={SITE.title}
+	description={SITE.description}
+	jsonLd={[websiteJsonLd(), personJsonLd()]}
+>
 	<section class="hero" aria-labelledby="hero-heading">
 		<p class="kicker">{SITE.jobTitle}</p>
 		<h1 id="hero-heading">{SITE.author}</h1>

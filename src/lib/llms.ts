@@ -26,13 +26,17 @@ export async function buildLlmsIndex() {
 		'## builds',
 		'',
 		projects.length > 0
-			? projects.map((entry) => mdLink(entry.data.title, `projects/${entry.id}/`, entry.data.description)).join('\n')
+			? projects
+					.map((entry) => mdLink(entry.data.title, `projects/${entry.id}/`, entry.data.description))
+					.join('\n')
 			: '_No builds published yet._',
 		'',
 		'## changelog',
 		'',
 		posts.length > 0
-			? posts.map((entry) => mdLink(entry.data.title, `blog/${entry.id}/`, entry.data.description)).join('\n')
+			? posts
+					.map((entry) => mdLink(entry.data.title, `blog/${entry.id}/`, entry.data.description))
+					.join('\n')
 			: '_Changelog is empty._',
 		'',
 	].join('\n');

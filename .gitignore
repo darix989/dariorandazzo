@@ -1,5 +1,7 @@
 # build output
 dist/
+# staging dir for the CI link check
+_linkcheck/
 # generated types
 .astro/
 

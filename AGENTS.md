@@ -20,15 +20,24 @@ npm run dev      # dev server at http://localhost:4321/dariorandazzo/
 npm run build    # static output to dist/
 npm run preview  # serve the built dist/
 npm run og       # regenerate public/og.png, the default social card
+npm run check    # astro check: types, component props, content schemas
+npm run format   # prettier --write .
 ```
 
 Node `>=22.12.0` (see `engines` in [package.json](package.json)).
 
-**Verification:** `npm run build` is the only check available. There is no test
-suite, no linter, no formatter config, and `astro check` is *not* installed
-(`@astrojs/check` is not a dependency — don't invoke it). The build does run
-Zod validation on every content file's frontmatter, so a schema violation or a
-broken content reference fails the build. Run it after any change.
+**Verification:** run `npm run check && npm run build` after any change, and
+`npm run format` before finishing. There is no test suite.
+
+`astro build` transpiles without ever calling `tsc` — a plain type error like
+`const n: number = 'str'` builds clean — so `npm run check` (`astro check`) is
+the only thing enforcing the `strict` tsconfig. The build does run Zod
+validation on every content file's frontmatter, so schema violations and broken
+content references fail there.
+
+CI ([.github/workflows/ci.yml](.github/workflows/ci.yml)) runs formatting,
+checks, build, and a lychee link check on every PR and push to `main`, and the
+deploy job is gated on it. Keep it passing — a red run blocks the deploy.
 
 ## Layout
 
@@ -49,6 +58,7 @@ src/
     llms.ts                llms.txt / llms-full.txt generators
   pages/404.astro          noindex fallback; GitHub Pages serves it as 404.html
   styles/global.css        all styling, single file
+.github/workflows/ci.yml   verify job gates everything; deploy job needs it
 scripts/generate-og.mjs    renders public/og.png via sharp (`npm run og`)
 public/                    copied verbatim to the site root (favicons, og.png, images)
 drafts/                    scratch Markdown, untracked, NOT part of the build
@@ -60,11 +70,11 @@ dist/, .astro/             generated, gitignored — never edit or commit
 Code identifiers and user-facing labels deliberately disagree. Don't "fix" the
 mismatch.
 
-| Collection | Route | Nav label | Page kicker |
-| --- | --- | --- | --- |
-| `pages` (`src/content/about.md`) | `/about/` | `readme` | — |
-| `projects` (`src/content/projects/`) | `/projects/` | `builds` | `build` (singular) |
-| `blog` (`src/content/blog/`) | `/blog/` | `changelog` | `changelog` |
+| Collection                           | Route        | Nav label   | Page kicker        |
+| ------------------------------------ | ------------ | ----------- | ------------------ |
+| `pages` (`src/content/about.md`)     | `/about/`    | `readme`    | —                  |
+| `projects` (`src/content/projects/`) | `/projects/` | `builds`    | `build` (singular) |
+| `blog` (`src/content/blog/`)         | `/blog/`     | `changelog` | `changelog`        |
 
 Collections and routes always agree; only the labels differ. In code, paths, and
 `getCollection` calls use the collection name; in anything a human reads use the
@@ -111,10 +121,10 @@ the `getPublished*` filters in [src/lib/content.ts](src/lib/content.ts). Each
 collection keeps a `_placeholder.md` with `draft: true` to exercise the
 pipeline; leave those in place.
 
-`getFeaturedProjects()` falls back to *all* published projects when nothing
+`getFeaturedProjects()` falls back to _all_ published projects when nothing
 is marked `featured`, so the homepage never renders empty.
 
-`about.md` also carries an optional `intro`: the homepage renders *that* plus a
+`about.md` also carries an optional `intro`: the homepage renders _that_ plus a
 link, not the full body, so `/` and `/about/` are not duplicate pages. Edit the
 body and the `intro` together, or the teaser drifts from what it teases.
 
@@ -156,9 +166,11 @@ body and the `intro` together, or the teaser drifts from what it teases.
 - **Accessibility** is already wired: skip link, `aria-labelledby` on sections,
   `aria-current="page"` in the nav, `alt` on every image, `<time datetime>` for
   dates. Keep it that way.
-- **Formatting**: tabs in `src/`, 2 spaces in JSON and `astro.config.mjs`; single
-  quotes, semicolons, `interface Props` for component props. TypeScript runs in
-  Astro's `strict` preset.
+- **Formatting** is Prettier's job, not yours: tabs for code, 2 spaces for
+  JSON/YAML/Markdown, single quotes, semicolons, 100 columns. Run
+  `npm run format`. `src/content/` and `drafts/` are deliberately ignored —
+  Prettier would rewrite the hand-written `<img>` tags in authored prose. Keep
+  using `interface Props` for component props.
 
 ## Git
 
@@ -166,10 +178,11 @@ body and the `intro` together, or the teaser drifts from what it teases.
 - Conventional-ish commit subjects: `chore:`, `feat:`.
 - PRs target `main` and follow [.github/PULL_REQUEST_TEMPLATE.md](.github/PULL_REQUEST_TEMPLATE.md)
   (`# Summary`, `# Solution`).
-- Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
-  (`withastro/action@v6`), which builds and deploys to GitHub Pages. A broken
-  build on `main` is a broken deploy.
-- Never commit `dist/` or `.astro/`. `drafts/` is untracked but *not* gitignored
+- Pushing to `main` runs [.github/workflows/ci.yml](.github/workflows/ci.yml):
+  the `verify` job, then a `deploy` job gated on it with `needs: verify`. A red
+  `verify` means no deploy at all, so a broken `main` leaves the previous site
+  up rather than publishing the break. Pull requests run `verify` only.
+- Never commit `dist/` or `.astro/`. `drafts/` is untracked but _not_ gitignored
   — don't add it to a commit unless asked.
 
 ## If the site moves to a custom domain

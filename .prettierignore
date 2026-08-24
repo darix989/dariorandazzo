@@ -1,0 +1,11 @@
+# generated
+dist/
+.astro/
+_linkcheck/
+package-lock.json
+
+# authored prose: Prettier reflows paragraphs and rewrites the inline <img> tags
+src/content/
+
+# scratch, not part of the build
+drafts/
