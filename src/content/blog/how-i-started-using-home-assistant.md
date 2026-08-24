@@ -1,6 +1,6 @@
 ---
 title: "How I started using Home Assistant"
-description: "A $40 CAD door sensor that could only beep, a Zigbee habit I never kicked, and the alarm system that finally went off during a fire inspection."
+description: "One requirement: an alarm while I was away. What shipped: a Zigbee network, a homemade NAS, and an apartment that arms itself. Happiest scope creep of my life."
 pubDate: 2026-08-24
 tags:
   - home-assistant
