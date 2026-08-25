@@ -61,7 +61,7 @@ src/
 .github/workflows/ci.yml   verify job gates everything; deploy job needs it
 scripts/generate-og.mjs    renders public/og.png via sharp (`npm run og`)
 public/                    copied verbatim to the site root (favicons, og.png, images)
-drafts/                    scratch Markdown, untracked, NOT part of the build
+drafts/                    scratch Markdown, gitignored, NOT part of the build
 dist/, .astro/             generated, gitignored — never edit or commit
 ```
 
@@ -182,8 +182,7 @@ body and the `intro` together, or the teaser drifts from what it teases.
   the `verify` job, then a `deploy` job gated on it with `needs: verify`. A red
   `verify` means no deploy at all, so a broken `main` leaves the previous site
   up rather than publishing the break. Pull requests run `verify` only.
-- Never commit `dist/` or `.astro/`. `drafts/` is untracked but _not_ gitignored
-  — don't add it to a commit unless asked.
+- Never commit `dist/`, `.astro/`, or `drafts/` — all three are gitignored.
 
 ## If the site moves to a custom domain
 

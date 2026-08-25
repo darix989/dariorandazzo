@@ -4,6 +4,8 @@ dist/
 _linkcheck/
 # generated types
 .astro/
+# scratch Markdown, not part of the build
+drafts/
 
 # dependencies
 node_modules/
