@@ -87,7 +87,9 @@ about the post lives in the filename.
 - **`updatedDate`**: only on a real edit to an already-published post.
 - **`tags`**: lowercase, hyphenated, **max three**. Reuse before inventing —
   `grep -h -A3 '^tags:' src/content/blog/*.md` for what already exists. A tag with
-  one post and no future is noise.
+  one post and no future is noise. Tags become `/blog/tags/<tag>/` listing
+  pages; when the post is about a build, reuse that project's slug
+  (`well-bookmarked`) so the build page can link to its changelog.
 - **`draft: true` until he says publish.** Always. A draft post is invisible
   everywhere (listings, `getStaticPaths`, sitemap, RSS, both `llms` files), so it is
   safe to commit half-finished. Never flip it to `false` on your own initiative.

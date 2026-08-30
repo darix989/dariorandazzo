@@ -1,9 +1,11 @@
 ---
 import PostCard from '../../components/PostCard.astro';
+import TagLinks from '../../components/TagLinks.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedPosts } from '../../lib/content';
+import { getPublishedPosts, getPublishedTags } from '../../lib/content';
 
 const posts = await getPublishedPosts();
+const tags = (await getPublishedTags()).map(({ tag }) => tag);
 const description = 'Notes and posts by Dario Randazzo.';
 ---
 
@@ -12,6 +14,13 @@ const description = 'Notes and posts by Dario Randazzo.';
 		<p class="kicker">log</p>
 		<h1>changelog</h1>
 		<p class="lede">{description}</p>
+		{
+			tags.length > 0 && (
+				<p class="meta">
+					tagged · <TagLinks tags={tags} />
+				</p>
+			)
+		}
 	</div>
 	{
 		posts.length > 0 ? (

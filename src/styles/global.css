@@ -221,6 +221,14 @@ article {
 	font-size: 0.92rem;
 }
 
+.meta a {
+	color: inherit;
+}
+
+.meta a:hover {
+	color: var(--accent);
+}
+
 .section {
 	padding: 2.5rem 0 0;
 }
