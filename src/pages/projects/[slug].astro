@@ -1,8 +1,9 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedProjects } from '../../lib/content';
+import { getPublishedPostsByTag, getPublishedProjects } from '../../lib/content';
 import { softwareApplicationJsonLd } from '../../lib/jsonld';
+import { withBase } from '../../lib/site';
 
 export async function getStaticPaths() {
 	const projects = await getPublishedProjects();
@@ -19,10 +20,15 @@ interface Props {
 const { project } = Astro.props;
 const { Content } = await render(project);
 const path = `projects/${project.id}/`;
+const taggedPosts = await getPublishedPostsByTag(project.id);
 const links = [
 	project.data.storeUrl && { href: project.data.storeUrl, label: 'Store' },
 	project.data.repoUrl && { href: project.data.repoUrl, label: 'Source' },
 	project.data.websiteUrl && { href: project.data.websiteUrl, label: 'Website' },
+	taggedPosts.length > 0 && {
+		href: withBase(`blog/tags/${project.id}/`),
+		label: 'changelog',
+	},
 ].filter((link): link is { href: string; label: string } => Boolean(link));
 ---
 

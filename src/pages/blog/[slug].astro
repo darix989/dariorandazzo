@@ -1,5 +1,6 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
+import TagLinks from '../../components/TagLinks.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublishedPosts } from '../../lib/content';
 import { blogPostingJsonLd } from '../../lib/jsonld';
@@ -45,7 +46,14 @@ const updated = post.data.updatedDate?.toISOString().slice(0, 10);
 		<p class="meta">
 			<time datetime={post.data.pubDate.toISOString()}>{published}</time>
 			{updated && updated !== published && <> · Updated {updated}</>}
-			{post.data.tags.length > 0 && <> · {post.data.tags.join(', ')}</>}
+			{
+				post.data.tags.length > 0 && (
+					<>
+						{' · '}
+						<TagLinks tags={post.data.tags} />
+					</>
+				)
+			}
 		</p>
 		{
 			post.data.heroImage && (

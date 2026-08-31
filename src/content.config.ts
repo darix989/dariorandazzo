@@ -19,7 +19,18 @@ const blog = defineCollection({
 		description: z.string(),
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
-		tags: z.array(z.string()).default([]),
+		/** Lowercase hyphenated slugs. Each one becomes `/blog/tags/<tag>/`. */
+		tags: z
+			.array(
+				z
+					.string()
+					.regex(
+						/^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+						'Use a lowercase hyphenated slug (e.g. well-bookmarked).',
+					),
+			)
+			.max(3)
+			.default([]),
 		draft: z.boolean().default(false),
 		heroImage: z.string().optional(),
 		heroImageAlt: z.string().optional(),

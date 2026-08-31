@@ -50,7 +50,7 @@ src/
     projects/*.md          the `projects` collection
   pages/                   routes (file-based)
   layouts/BaseLayout.astro the only layout; wraps Seo + Header + Footer
-  components/              Seo, Header, Footer, PostCard, ProjectCard
+  components/              Seo, Header, Footer, PostCard, ProjectCard, TagLinks
   lib/
     site.ts                SITE constants, withBase(), absoluteUrl()
     content.ts             collection queries (draft filtering + sorting)
@@ -110,6 +110,11 @@ file is the source of truth for required vs. optional fields.
 - **Blog post** → `src/content/blog/my-slug.md` → `/blog/my-slug/`
   Required: `title`, `description`, `pubDate`. Optional: `updatedDate`, `tags`,
   `draft`, `heroImage`, `heroImageAlt`, `heroImageWidth`, `heroImageHeight`.
+  Each tag must be a lowercase hyphenated slug (`well-bookmarked`), max three.
+  Tags become listing pages at `/blog/tags/<tag>/`. Reuse the project slug when
+  a post is about a build, so that build's page can link to its changelog.
+  Don't put posts under `src/content/blog/tags/` — that id collides with the
+  tag route.
 - **Project** → `src/content/projects/my-slug.md` → `/projects/my-slug/`
   Required: `title`, `description`, `status` (`live` | `wip` | `archived`).
   Optional: `storeUrl`, `repoUrl`, `websiteUrl`, `platforms` (`chrome` |

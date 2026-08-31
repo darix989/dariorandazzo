@@ -22,6 +22,7 @@ Content is Markdown. Add a file, fill in frontmatter, and rebuild. Set `draft: t
 | --------- | --------------------------------- | ----------------------------------------------- |
 | About     | `src/content/about.md`            | `/about/` (the homepage shows its `intro` only) |
 | Blog post | `src/content/blog/my-slug.md`     | `/blog/my-slug/`                                |
+| Tag       | post `tags` frontmatter           | `/blog/tags/<tag>/`                             |
 | Project   | `src/content/projects/my-slug.md` | `/projects/my-slug/`                            |
 
 The filename is the slug. Dates and other metadata live in frontmatter, not the filename.
@@ -29,7 +30,7 @@ The filename is the slug. Dates and other metadata live in frontmatter, not the 
 **About frontmatter:** `title`, `description`, optional `intro` — the short teaser the
 homepage shows in place of the full text, so `/` and `/about/` aren't the same page.
 
-**Blog frontmatter:** `title`, `description`, `pubDate`, optional `updatedDate`, `tags`, `draft`, `heroImage`, `heroImageAlt`, `heroImageWidth`, `heroImageHeight`.
+**Blog frontmatter:** `title`, `description`, `pubDate`, optional `updatedDate`, `tags` (lowercase hyphenated slugs, max three; each becomes `/blog/tags/<tag>/`), `draft`, `heroImage`, `heroImageAlt`, `heroImageWidth`, `heroImageHeight`. Reuse a project's slug as a tag when the post is about that build.
 
 Set both `heroImageWidth` and `heroImageHeight` to the image's real pixel size so
 the browser reserves space and the page doesn't shift as it loads.

@@ -1,4 +1,4 @@
-import { getAbout, getPublishedProjects, getPublishedPosts } from './content';
+import { getAbout, getPublishedProjects, getPublishedPosts, getPublishedTags } from './content';
 import { SITE, absoluteUrl } from './site';
 
 function mdLink(title: string, path: string, description: string) {
@@ -9,6 +9,7 @@ export async function buildLlmsIndex() {
 	const about = await getAbout();
 	const projects = await getPublishedProjects();
 	const posts = await getPublishedPosts();
+	const tags = await getPublishedTags();
 
 	return [
 		`# ${SITE.author}`,
@@ -39,6 +40,18 @@ export async function buildLlmsIndex() {
 					.join('\n')
 			: '_Changelog is empty._',
 		'',
+		...(tags.length > 0
+			? [
+					'### tagged',
+					'',
+					tags
+						.map(({ tag, count }) =>
+							mdLink(tag, `blog/tags/${tag}/`, `Changelog posts tagged ${tag} (${count}).`),
+						)
+						.join('\n'),
+					'',
+				]
+			: []),
 	].join('\n');
 }
 
