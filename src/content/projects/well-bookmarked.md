@@ -36,6 +36,7 @@ bookmarks anywhere you sign in. Nothing is stored in a database only this extens
   [Tags Analyzer](#tags-analyzer)
 - [New Tab mode](#new-tab-mode) · [Keyboard](#keyboard-first) · [Settings](#everything-is-configurable) ·
   [Backup](#backup-and-restore) · [Privacy](#privacy-and-permissions) · [Browser support](#browser-support)
+- [changelog](/dariorandazzo/blog/tags/well-bookmarked/)
 
 ---
 

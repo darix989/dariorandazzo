@@ -1,0 +1,53 @@
+---
+import PostCard from '../../../components/PostCard.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getPublishedPosts, getPublishedProjects, getPublishedTags } from '../../../lib/content';
+import { withBase } from '../../../lib/site';
+
+export async function getStaticPaths() {
+	const posts = await getPublishedPosts();
+	const tags = await getPublishedTags();
+	const projects = await getPublishedProjects();
+	const projectTitleById = new Map(projects.map((project) => [project.id, project.data.title]));
+	return tags.map(({ tag }) => ({
+		params: { tag },
+		props: {
+			tag,
+			projectTitle: projectTitleById.get(tag),
+			posts: posts.filter((post) => post.data.tags.includes(tag)),
+		},
+	}));
+}
+
+interface Props {
+	tag: string;
+	projectTitle?: string;
+	posts: Awaited<ReturnType<typeof getPublishedPosts>>;
+}
+
+const { tag, projectTitle, posts } = Astro.props;
+const path = `blog/tags/${tag}/`;
+const description = projectTitle
+	? `Changelog for ${projectTitle}.`
+	: `Changelog posts tagged ${tag}.`;
+---
+
+<BaseLayout title={tag} description={description} path={path}>
+	<div class="page-intro">
+		<p class="kicker">log</p>
+		<h1>{tag}</h1>
+		<p class="lede">{description}</p>
+		<p><a class="more-link" href={withBase('blog/')}>All changelog</a></p>
+	</div>
+	{
+		posts.length > 0 ? (
+			<ul class="journal">
+				{posts.map((post) => (
+					<PostCard post={post} />
+				))}
+			</ul>
+		) : (
+			<p class="empty">No posts with this tag.</p>
+		)
+	}
+</BaseLayout>
