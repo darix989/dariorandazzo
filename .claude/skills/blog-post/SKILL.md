@@ -90,6 +90,12 @@ about the post lives in the filename.
   one post and no future is noise. Tags become `/blog/tags/<tag>/` listing
   pages; when the post is about a build, reuse that project's slug
   (`well-bookmarked`) so the build page can link to its changelog.
+- **`release`**: required whenever the post covers specific versions of a build.
+  `project` is the project slug, `versions` the versions covered, oldest first and
+  quoted (`"2.6"`, `"2.7"`). Get the numbers from him or the repo — never infer
+  them. This is what tells a reader which version the post is about, on the
+  listing and on the article, so don't also cram the version into the `title`.
+  An origin story or a non-build post has no `release`.
 - **`draft: true` until he says publish.** Always. A draft post is invisible
   everywhere (listings, `getStaticPaths`, sitemap, RSS, both `llms` files), so it is
   safe to commit half-finished. Never flip it to `false` on your own initiative.

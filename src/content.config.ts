@@ -1,4 +1,4 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
@@ -37,6 +37,18 @@ const blog = defineCollection({
 		/** Intrinsic size of heroImage. Set both to reserve space and avoid layout shift. */
 		heroImageWidth: z.number().int().positive().optional(),
 		heroImageHeight: z.number().int().positive().optional(),
+		/**
+		 * The build and version(s) a release post covers, oldest first. Rendered as a label on
+		 * every listing and under the post title, so a reader always knows which version it is.
+		 */
+		release: z
+			.object({
+				project: reference('projects'),
+				versions: z
+					.array(z.string().regex(/^\d+(?:\.\d+){1,2}$/, 'Use a version like 2.7 or 2.7.0.'))
+					.min(1),
+			})
+			.optional(),
 	}),
 });
 

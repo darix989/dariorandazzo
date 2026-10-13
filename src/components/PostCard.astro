@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { getRelease } from '../lib/content';
 import { withBase } from '../lib/site';
 
 interface Props {
@@ -10,10 +11,20 @@ interface Props {
 const { post, heading: Heading = 'h2' } = Astro.props;
 const href = withBase(`blog/${post.id}/`);
 const date = post.data.pubDate.toISOString().slice(0, 10);
+const release = await getRelease(post);
 ---
 
 <li class="journal-item">
-	<time datetime={post.data.pubDate.toISOString()}>{date}</time>
+	<div class="journal-stamp">
+		<time datetime={post.data.pubDate.toISOString()}>{date}</time>
+		{
+			release && (
+				<span>
+					{release.title} <span class="journal-version">{release.version}</span>
+				</span>
+			)
+		}
+	</div>
 	<div>
 		<Heading>
 			<a href={href}>{post.data.title}</a>

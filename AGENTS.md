@@ -109,12 +109,21 @@ file is the source of truth for required vs. optional fields.
 
 - **Blog post** → `src/content/blog/my-slug.md` → `/blog/my-slug/`
   Required: `title`, `description`, `pubDate`. Optional: `updatedDate`, `tags`,
-  `draft`, `heroImage`, `heroImageAlt`, `heroImageWidth`, `heroImageHeight`.
+  `draft`, `heroImage`, `heroImageAlt`, `heroImageWidth`, `heroImageHeight`,
+  `release`.
   Each tag must be a lowercase hyphenated slug (`well-bookmarked`), max three.
   Tags become listing pages at `/blog/tags/<tag>/`. Reuse the project slug when
   a post is about a build, so that build's page can link to its changelog.
   Don't put posts under `src/content/blog/tags/` — that id collides with the
   tag route.
+  A post about specific versions of a build **must** set `release`
+  (`project: <project slug>`, `versions: ["2.6", "2.7"]`, oldest first, quoted
+  so YAML keeps them strings). `getRelease()` in
+  [src/lib/content.ts](src/lib/content.ts) turns it into the
+  `Well Bookmarked 2.6 and 2.7` label shown on every post card, under the
+  article title, in RSS titles, both `llms` files, and the JSON-LD `about`.
+  Titles stay free of version numbers — the label carries them. Posts that
+  aren't about a release (origin stories, non-build posts) leave it out.
 - **Project** → `src/content/projects/my-slug.md` → `/projects/my-slug/`
   Required: `title`, `description`, `status` (`live` | `wip` | `archived`).
   Optional: `storeUrl`, `repoUrl`, `websiteUrl`, `platforms` (`chrome` |
