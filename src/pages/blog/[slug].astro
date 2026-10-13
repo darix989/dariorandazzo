@@ -2,7 +2,7 @@
 import { render, type CollectionEntry } from 'astro:content';
 import TagLinks from '../../components/TagLinks.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedPosts } from '../../lib/content';
+import { getPublishedPosts, getRelease } from '../../lib/content';
 import { blogPostingJsonLd } from '../../lib/jsonld';
 import { withBase } from '../../lib/site';
 
@@ -23,6 +23,7 @@ const { Content } = await render(post);
 const path = `blog/${post.id}/`;
 const published = post.data.pubDate.toISOString().slice(0, 10);
 const updated = post.data.updatedDate?.toISOString().slice(0, 10);
+const release = await getRelease(post);
 ---
 
 <BaseLayout
@@ -38,11 +39,22 @@ const updated = post.data.updatedDate?.toISOString().slice(0, 10);
 		path,
 		pubDate: post.data.pubDate,
 		updatedDate: post.data.updatedDate,
+		release,
 	})}
 >
 	<article>
 		<p class="kicker">changelog</p>
 		<h1>{post.data.title}</h1>
+		{
+			release &&
+				(release.path ? (
+					<a class="release" href={withBase(release.path)}>
+						{release.label}
+					</a>
+				) : (
+					<span class="release">{release.label}</span>
+				))
+		}
 		<p class="meta">
 			<time datetime={post.data.pubDate.toISOString()}>{published}</time>
 			{updated && updated !== published && <> · Updated {updated}</>}

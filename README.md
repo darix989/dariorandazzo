@@ -30,7 +30,7 @@ The filename is the slug. Dates and other metadata live in frontmatter, not the 
 **About frontmatter:** `title`, `description`, optional `intro` — the short teaser the
 homepage shows in place of the full text, so `/` and `/about/` aren't the same page.
 
-**Blog frontmatter:** `title`, `description`, `pubDate`, optional `updatedDate`, `tags` (lowercase hyphenated slugs, max three; each becomes `/blog/tags/<tag>/`), `draft`, `heroImage`, `heroImageAlt`, `heroImageWidth`, `heroImageHeight`. Reuse a project's slug as a tag when the post is about that build.
+**Blog frontmatter:** `title`, `description`, `pubDate`, optional `updatedDate`, `tags` (lowercase hyphenated slugs, max three; each becomes `/blog/tags/<tag>/`), `draft`, `heroImage`, `heroImageAlt`, `heroImageWidth`, `heroImageHeight`, `release` (`project` + `versions`, required on any post about specific versions of a build — it renders the version label on listings and the article). Reuse a project's slug as a tag when the post is about that build.
 
 Set both `heroImageWidth` and `heroImageHeight` to the image's real pixel size so
 the browser reserves space and the page doesn't shift as it loads.

@@ -320,11 +320,23 @@ article {
 	border-bottom: 1px solid var(--border);
 }
 
-.journal-item time {
+.journal-stamp {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
 	color: var(--sage);
 	font-family: var(--sans);
 	font-size: 0.88rem;
 	font-variant-numeric: tabular-nums;
+	line-height: 1.35;
+}
+
+.journal-stamp span {
+	color: var(--muted);
+}
+
+.journal-version {
+	display: block;
 }
 
 .journal-item h2,
@@ -345,6 +357,22 @@ article {
 .journal-item p {
 	margin: 0;
 	color: var(--muted);
+}
+
+.release {
+	display: block;
+	width: fit-content;
+	margin: 0 0 0.6rem;
+	padding: 0.1rem 0.6rem;
+	background: var(--bg-elevated);
+	border: 1px solid var(--border);
+	border-radius: 999px;
+	color: var(--sage);
+	font-family: var(--sans);
+	font-size: 0.82rem;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	text-decoration: none;
 }
 
 .more-link {
@@ -391,5 +419,18 @@ article {
 	.journal-item {
 		grid-template-columns: 1fr;
 		gap: 0.35rem;
+	}
+
+	.journal-stamp {
+		flex-flow: row wrap;
+		gap: 0 0.35rem;
+	}
+
+	.journal-stamp > span::before {
+		content: '· ';
+	}
+
+	.journal-version {
+		display: inline;
 	}
 }
