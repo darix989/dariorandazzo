@@ -4,7 +4,7 @@ description: "Well Bookmarked now has a short tour and a Help entry on every scr
 pubDate: 2026-10-13
 tags:
   - well-bookmarked
-draft: true
+draft: false
 heroImage: blog/help-when-you-ask-for-it/tutorial.webp
 heroImageAlt: "The Library Analyzer tutorial card, step one of two, open over the Sites list"
 heroImageWidth: 1440
