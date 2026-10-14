@@ -7,7 +7,7 @@ tags:
 release:
   project: well-bookmarked
   versions:
-    - "2.7"
+    - "2.7.0"
 draft: false
 heroImage: blog/the-same-tag-twice/tags-analyzer.webp
 heroImageAlt: "Library Analyzer Tags tab as a two-line row list, with a Duplicates action"
