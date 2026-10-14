@@ -1,9 +1,10 @@
 import rss from '@astrojs/rss';
-import { getPublishedPosts } from '../lib/content';
+import { getPublishedPosts, getRelease } from '../lib/content';
 import { SITE, absoluteUrl } from '../lib/site';
 
 export async function GET() {
 	const posts = await getPublishedPosts();
+	const releases = await Promise.all(posts.map(getRelease));
 
 	const latest = posts[0]?.data.updatedDate ?? posts[0]?.data.pubDate;
 
@@ -12,8 +13,8 @@ export async function GET() {
 		description: SITE.description,
 		site: absoluteUrl(),
 		trailingSlash: true,
-		items: posts.map((post) => ({
-			title: post.data.title,
+		items: posts.map((post, index) => ({
+			title: releases[index] ? `${post.data.title} (${releases[index].label})` : post.data.title,
 			description: post.data.description,
 			pubDate: post.data.pubDate,
 			link: `blog/${post.id}/`,

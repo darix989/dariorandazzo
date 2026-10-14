@@ -4,6 +4,10 @@ description: "Well Bookmarked can now merge similar tags, flatten empty folders 
 pubDate: 2026-08-30
 tags:
   - well-bookmarked
+release:
+  project: well-bookmarked
+  versions:
+    - "2.7"
 draft: false
 heroImage: blog/the-same-tag-twice/tags-analyzer.webp
 heroImageAlt: "Library Analyzer Tags tab as a two-line row list, with a Duplicates action"
@@ -15,7 +19,7 @@ heroImageHeight: 855
 
 Two names. Same idea. The old Tags tab was a wrapping cloud of pills, and the only way to notice the pair was to stare until they lined up.
 
-[Well Bookmarked](/dariorandazzo/projects/well-bookmarked/) 2.6 and 2.7 were about that kind of mess: the one a bookmark tree never shows, and that used to mean leaving the screen that found it.
+[Well Bookmarked](/dariorandazzo/projects/well-bookmarked/) 2.7 was about that kind of mess: the one a bookmark tree never shows, and that used to mean leaving the screen that found it.
 
 ## cleanup
 

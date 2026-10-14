@@ -1,4 +1,10 @@
-import { getAbout, getPublishedProjects, getPublishedPosts, getPublishedTags } from './content';
+import {
+	getAbout,
+	getPublishedProjects,
+	getPublishedPosts,
+	getPublishedTags,
+	getRelease,
+} from './content';
 import { SITE, absoluteUrl } from './site';
 
 function mdLink(title: string, path: string, description: string) {
@@ -9,6 +15,7 @@ export async function buildLlmsIndex() {
 	const about = await getAbout();
 	const projects = await getPublishedProjects();
 	const posts = await getPublishedPosts();
+	const releases = await Promise.all(posts.map(getRelease));
 	const tags = await getPublishedTags();
 
 	return [
@@ -36,7 +43,11 @@ export async function buildLlmsIndex() {
 		'',
 		posts.length > 0
 			? posts
-					.map((entry) => mdLink(entry.data.title, `blog/${entry.id}/`, entry.data.description))
+					.map((entry, index) => {
+						const release = releases[index];
+						const title = release ? `${entry.data.title} (${release.label})` : entry.data.title;
+						return mdLink(title, `blog/${entry.id}/`, entry.data.description);
+					})
 					.join('\n')
 			: '_Changelog is empty._',
 		'',
@@ -91,11 +102,13 @@ export async function buildLlmsFull() {
 	if (posts.length > 0) {
 		sections.push('', '## changelog');
 		for (const entry of posts) {
+			const release = await getRelease(entry);
 			sections.push(
 				'',
 				`### ${entry.data.title}`,
 				'',
 				`URL: ${absoluteUrl(`blog/${entry.id}/`)}`,
+				...(release ? [`Release: ${release.label}`] : []),
 				'',
 				entry.body?.trim() ?? entry.data.description,
 			);

@@ -31,6 +31,7 @@ export function blogPostingJsonLd(input: {
 	path: string;
 	pubDate: Date;
 	updatedDate?: Date;
+	release?: { title: string; versions: string[]; path?: string };
 }) {
 	return {
 		'@context': 'https://schema.org',
@@ -46,6 +47,12 @@ export function blogPostingJsonLd(input: {
 		},
 		mainEntityOfPage: absoluteUrl(input.path),
 		url: absoluteUrl(input.path),
+		about: input.release && {
+			'@type': 'SoftwareApplication',
+			name: input.release.title,
+			softwareVersion: input.release.versions.join(', '),
+			url: input.release.path && absoluteUrl(input.release.path),
+		},
 	};
 }
 
