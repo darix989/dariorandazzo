@@ -29,6 +29,8 @@ The question mark was not. In 2.8 its tooltip started opening on keyboard focus,
 
 2.10.1 keeps it shut until it is hovered, or tabbed back to.
 
+It fixes one more Enter that did the wrong thing. Type two words in Search, press Enter straight away, and sometimes nothing got submitted: focus jumped to the web-search row, and the words stayed in the bar. Enter had landed a moment before the extension noticed a search was on its way, so it read as "no results". Now it submits.
+
 ## the small popup
 
 The toolbar popup was Search, Add Page, and Settings. The Library Analyzer sits in it now too, and Add Page still turns into Edit Bookmark when the page is already saved.
